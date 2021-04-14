@@ -15,7 +15,7 @@ const height = svgHeight - margin.top - margin.bottom;
 
 // Create an SVG wrapper, append an SVG group that will hold our chart.
 // Shift the SVG by left and top margins.
-const svg = d3.select(".chart")
+const svg = d3.select("#scatter")
   .append("svg")
   .attr("width", svgWidth)
   .attr("height", svgHeight);
@@ -26,35 +26,35 @@ const chartGroup = svg.append("g")
 // Import Data
 d3.csv("data.csv").then(avgageData => {
 
-    // Parse Data/Cast as numbers
+    // Parse Data and cast as numbers
     // ?Format and convert as needed?
+    // Set lower axis'
    avgageData.forEach(data => {
       data.age = +data.age;
       data.healthcare = +data.healthcare;
     });
 
-    // Create scales
-    const xLinearScale = d3.scaleLinear()
+    // Create axis details and define with D3
+    const x_Scale = d3.scaleLinear()
       .domain([20, d3.max(avgageData, d => d.age)])
       .range([0, width]);
 
-    const yLinearScale = d3.scaleLinear()
+    const y_Scale = d3.scaleLinear()
       .domain([0, d3.max(avgageData, d => d.healthcare)])
       .range([height, 0]);
-
-    // Step 3: Create axis functions
-    // ==============================
-    const bottomAxis = d3.axisBottom(xLinearScale);
-    const leftAxis = d3.axisLeft(yLinearScale);
+ 
+    // Create the axis
+    const bottomAxis = d3.axisBottom(x_Scale);
+    const leftAxis = d3.axisLeft(y_Scale);
 
     // Step 4: Append Axes to the chart
-    // ==============================
     chartGroup.append("g")
       .attr("transform", `translate(0, ${height})`)
       .call(bottomAxis);
 
     chartGroup.append("g")
       .call(leftAxis);
+    chartGroup.append("g").call(leftAxis);
 
     // Step 5: Create Circles
     // ==============================
