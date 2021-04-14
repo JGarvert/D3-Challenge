@@ -1,3 +1,5 @@
+// Set up the chart
+// Select SVG dimension and buffer (margin) dimensions
 const svgWidth = 960;
 const svgHeight = 500;
 
@@ -11,7 +13,8 @@ const margin = {
 const width = svgWidth - margin.left - margin.right;
 const height = svgHeight - margin.top - margin.bottom;
 
-// Create an SVG wrapper, append an SVG group that will hold our chart, and shift the latter by left and top margins.
+// Create an SVG wrapper, append an SVG group that will hold our chart.
+// Shift the SVG by left and top margins.
 const svg = d3.select(".chart")
   .append("svg")
   .attr("width", svgWidth)
@@ -23,15 +26,14 @@ const chartGroup = svg.append("g")
 // Import Data
 d3.csv("data.csv").then(avgageData => {
 
-    // Step 1: Parse Data/Cast as numbers
-    // ==============================
+    // Parse Data/Cast as numbers
+    // ?Format and convert as needed?
    avgageData.forEach(data => {
       data.age = +data.age;
       data.healthcare = +data.healthcare;
     });
 
-    // Step 2: Create scale functions
-    // ==============================
+    // Create scales
     const xLinearScale = d3.scaleLinear()
       .domain([20, d3.max(avgageData, d => d.age)])
       .range([0, width]);
