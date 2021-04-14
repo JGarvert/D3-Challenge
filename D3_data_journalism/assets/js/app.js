@@ -56,8 +56,8 @@ d3.csv("data.csv").then(avgageData => {
       .call(leftAxis);
     chartGroup.append("g").call(leftAxis);
 
-    // Step 5: Create Circles
-    // ==============================
+    //  Create Circles
+  
     const circlesGroup = chartGroup.selectAll("circle")
     .data(avgageData)
     .join("circle")
@@ -69,8 +69,8 @@ d3.csv("data.csv").then(avgageData => {
     .attr("stroke", "black")
     .attr("stroke-width", 1);
 
-    // Step 6: Initialize tool tip
-    // ==============================
+    // Initialize tool tip
+
     const toolTip = d3.tip()
       .attr("class", "tooltip")
       .offset([80, -60])
