@@ -24,7 +24,7 @@ const chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // Import Data
-d3.csv("data.csv").then(avgageData => {
+d3.csv("assets/date/data.csv").then(avgageData => {
 
     // Parse Data and cast as numbers
     // ?Format and convert as needed?
@@ -33,6 +33,8 @@ d3.csv("data.csv").then(avgageData => {
       data.age = +data.age;
       data.healthcare = +data.healthcare;
     });
+// Check data
+    console.log(avgageData);
 
     // Create axis details and define with D3
     const x_Scale = d3.scaleLinear()
