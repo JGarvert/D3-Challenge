@@ -51,23 +51,24 @@ d3.csv("assets/date/data.csv").then(avgageData => {
 
     // Step 4: Append Axes to the chart
     chartGroup.append("g")
+      .classed("x-axis",true)
       .attr("transform", `translate(0, ${height + margin.top -10})`)
       .call(bottomAxis);
 
     chartGroup.append("g").call(leftAxis);
   
     //  Create Circles
-  
     const circlesGroup = chartGroup.selectAll("circle")
     .data(avgageData)
+    .enter()
     .join("circle")
     .attr("cx", d => x_Scale(d.age))
     .attr("cy", d => y_Scale(d.healthcare))
     .attr("r", "15")
-    .attr("fill", "pink")
-    .attr("opacity", 0.5)
-    .attr("stroke", "black")
-    .attr("stroke-width", 1);
+    .attr("fill", "blue")
+    .attr("opacity", 0.6)
+    .attr("stroke", "white")
+    .attr("stroke-width", .5);
 
     // Initialize tool tip
 
@@ -97,12 +98,12 @@ d3.csv("assets/date/data.csv").then(avgageData => {
       .attr("x", 0 - (height / 2))
       .attr("dy", "1em")
       .attr("class", "axisText")
-      .text("Number of Billboard 100 Hits");
+      .text("Average Age");
 
     chartGroup.append("text")
       .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
       .attr("class", "axisText")
-      .text("Hair Metal Band Hair Length (inches)");
+      .text("Average Healthcare");
   }).catch(error => console.log(error));
 
 
