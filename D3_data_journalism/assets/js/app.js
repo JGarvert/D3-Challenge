@@ -51,20 +51,18 @@ d3.csv("assets/date/data.csv").then(avgageData => {
 
     // Step 4: Append Axes to the chart
     chartGroup.append("g")
-      .attr("transform", `translate(0, ${height})`)
+      .attr("transform", `translate(0, ${height + margin.top -10})`)
       .call(bottomAxis);
 
-    chartGroup.append("g")
-      .call(leftAxis);
     chartGroup.append("g").call(leftAxis);
-
+  
     //  Create Circles
   
     const circlesGroup = chartGroup.selectAll("circle")
     .data(avgageData)
     .join("circle")
-    .attr("cx", d => xLinearScale(d.age))
-    .attr("cy", d => yLinearScale(d.healthcare))
+    .attr("cx", d => x_Scale(d.age))
+    .attr("cy", d => y_Scale(d.healthcare))
     .attr("r", "15")
     .attr("fill", "pink")
     .attr("opacity", 0.5)
@@ -106,6 +104,7 @@ d3.csv("assets/date/data.csv").then(avgageData => {
       .attr("class", "axisText")
       .text("Hair Metal Band Hair Length (inches)");
   }).catch(error => console.log(error));
+
 
 
   
