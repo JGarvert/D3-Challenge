@@ -95,7 +95,7 @@ d3.csv("assets/data/data.csv").then(avgageData => {
     .attr("stroke","black")
     .attr("x", d => x_Scale(d.age)-8)
     .attr("y", d => y_Scale(d.healthcare)+6)
-    .attr("font-size",13)
+    .attr("font-size",12)
     .text( function (d) { return d.abbr; })
 
  
