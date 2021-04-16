@@ -1,12 +1,12 @@
 // Set up the chart
 // Select SVG dimension and buffer (margin) dimensions
 const svgWidth = 1000;
-const svgHeight = 500;
+const svgHeight = 700;
 
 const margin = {
   top: 40,
-  right: 60,
-  bottom: 60,
+  right: 210,
+  bottom: 100,
   left: 100
 };
  //Set chart location within div using margins
@@ -27,7 +27,6 @@ const chartGroup = svg.append("g")
 d3.csv("assets/data/data.csv").then(avgageData => {
 
     // Parse Data and cast as numbers
-    // Set lower axis'
    avgageData.forEach(data => {
       data.age = +data.age;
       data.healthcare = +data.healthcare;
@@ -38,13 +37,18 @@ d3.csv("assets/data/data.csv").then(avgageData => {
     // Create axis details and define with D3
     const x_Scale = d3.scaleLinear()
       // .domain([20, d3.max(avgageData, d => d.age)])
-      .domain(d3.extent(avgageData, data => data.age -.5))
-      .range([0, width]);
+      .domain(d3.extent(avgageData, data => data.age))
+      .range([0, width])
+      .nice();
 
     const y_Scale = d3.scaleLinear()
       // .domain([0, d3.max(avgageData, d => d.healthcare)])
-      .domain(d3.extent(avgageData, data => data.healthcare +.5))
-      .range([height, 0]);
+      .domain(d3.extent(avgageData, data => data.healthcare))
+      .range([height, 0])
+      .nice();
+
+    // const bottom_axis = d3.axisBottom(x_Scale);
+    // const left_axis = de.axisLeft(y_Scale);
  
     // Create the axis
     const bottomAxis = d3.axisBottom(x_Scale);
@@ -53,7 +57,8 @@ d3.csv("assets/data/data.csv").then(avgageData => {
     // Step 4: Append Axes to the chart
     chartGroup.append("g")
       // .classed("x-axis",true)
-      .attr("transform", `translate(0, ${height + margin.top -10})`)
+      // .attr("transform", `translate(0, ${height + margin.top})`)
+      .attr("transform", `translate(0, ${height})`)
       .call(bottomAxis);
 
     chartGroup.append("g").call(leftAxis);
