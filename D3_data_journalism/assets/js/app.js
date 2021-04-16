@@ -1,15 +1,15 @@
 // Set up the chart
 // Select SVG dimension and buffer (margin) dimensions
-const svgWidth = 960;
+const svgWidth = 1000;
 const svgHeight = 500;
 
 const margin = {
-  top: 20,
-  right: 40,
+  top: 40,
+  right: 60,
   bottom: 60,
   left: 100
 };
-
+ //Set chart location within div using margins
 const width = svgWidth - margin.left - margin.right;
 const height = svgHeight - margin.top - margin.bottom;
 
@@ -24,10 +24,9 @@ const chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // Import Data
-d3.csv("assets/date/data.csv").then(avgageData => {
+d3.csv("assets/data/data.csv").then(avgageData => {
 
     // Parse Data and cast as numbers
-    // ?Format and convert as needed?
     // Set lower axis'
    avgageData.forEach(data => {
       data.age = +data.age;
@@ -38,11 +37,13 @@ d3.csv("assets/date/data.csv").then(avgageData => {
 
     // Create axis details and define with D3
     const x_Scale = d3.scaleLinear()
-      .domain([20, d3.max(avgageData, d => d.age)])
+      // .domain([20, d3.max(avgageData, d => d.age)])
+      .domain(d3.extent(avgageData, data => data.age -.5))
       .range([0, width]);
 
     const y_Scale = d3.scaleLinear()
-      .domain([0, d3.max(avgageData, d => d.healthcare)])
+      // .domain([0, d3.max(avgageData, d => d.healthcare)])
+      .domain(d3.extent(avgageData, data => data.healthcare +.5))
       .range([height, 0]);
  
     // Create the axis
@@ -51,7 +52,7 @@ d3.csv("assets/date/data.csv").then(avgageData => {
 
     // Step 4: Append Axes to the chart
     chartGroup.append("g")
-      .classed("x-axis",true)
+      // .classed("x-axis",true)
       .attr("transform", `translate(0, ${height + margin.top -10})`)
       .call(bottomAxis);
 
@@ -60,7 +61,7 @@ d3.csv("assets/date/data.csv").then(avgageData => {
     //  Create Circles
     const circlesGroup = chartGroup.selectAll("circle")
     .data(avgageData)
-    .enter()
+    // .enter()
     .join("circle")
     .attr("cx", d => x_Scale(d.age))
     .attr("cy", d => y_Scale(d.healthcare))
@@ -69,6 +70,16 @@ d3.csv("assets/date/data.csv").then(avgageData => {
     .attr("opacity", 0.6)
     .attr("stroke", "white")
     .attr("stroke-width", .5);
+
+
+    circlesGroup.append("text").text(d => d.abbr)
+    // .attr("dx", function(d){return x_Scale(d.age)})
+    // .attr("dy", function(d){return y_Scale(d.healthcare)})
+    .attr("dx",d => x_Scale(d.age))
+    .attr("dy",d => y_Scale(d.healthcare))
+    .attr("font-size", 10);
+
+
 
     // Initialize tool tip
 
