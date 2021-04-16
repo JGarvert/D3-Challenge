@@ -3,12 +3,7 @@
 const svgWidth = 1000;
 const svgHeight = 700;
 
-const margin = {
-  top: 40,
-  right: 210,
-  bottom: 100,
-  left: 100
-};
+const margin = {  top: 40,  right: 210,  bottom: 100,  left: 100};
  //Set chart location within div using margins
 const width = svgWidth - margin.left - margin.right;
 const height = svgHeight - margin.top - margin.bottom;
@@ -64,28 +59,45 @@ d3.csv("assets/data/data.csv").then(avgageData => {
     chartGroup.append("g").call(leftAxis);
   
     //  Create Circles
+    // First add in color scale
+
+    // var colors = d3.scaleQuantize()
+    // .domain([30,40])
+    // .range(["#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598", 
+    // "#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"]);
+    // var colorCodes = ["#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598", "#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"];
+
+    // var colors = d3.scaleQuantile()
+    //   //quantize scale divides domain in bands according to ordinal scale range
+    //   .domain(d3.extent(avgageData, data => data.age))
+    //   //.domain(d3.ticks(minTemp,maxTemp,11))
+    //   .range(colorCodes);
+
+        // Add the state abbreviations to the circles
+
+
+
     const circlesGroup = chartGroup.selectAll("circle")
     .data(avgageData)
-    // .enter()
     .join("circle")
     .attr("cx", d => x_Scale(d.age))
     .attr("cy", d => y_Scale(d.healthcare))
     .attr("r", "15")
-    .attr("fill", "blue")
+    .attr("fill", "#B5D3E7")
     .attr("opacity", 0.6)
     .attr("stroke", "white")
     .attr("stroke-width", .5);
 
+    // Add in the state abbreviation
+    const circlesAbbv = chartGroup.selectAll("text")
+    .data(avgageData)
+    .enter().append("text")
+    .attr("stroke","black")
+    .attr("x", d => x_Scale(d.age))
+    .attr("y", d => y_Scale(d.healthcare))
+    .text( function (d) { return d.abbr; })
 
-    circlesGroup.append("text").text(d => d.abbr)
-    // .attr("dx", function(d){return x_Scale(d.age)})
-    // .attr("dy", function(d){return y_Scale(d.healthcare)})
-    .attr("dx",d => x_Scale(d.age))
-    .attr("dy",d => y_Scale(d.healthcare))
-    .attr("font-size", 10);
-
-
-
+ 
     // Initialize tool tip
 
     const toolTip = d3.tip()
