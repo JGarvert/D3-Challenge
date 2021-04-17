@@ -89,7 +89,7 @@ d3.csv("assets/data/data.csv").then(avgageData => {
     .attr("stroke-width", .5);
 
     // Add in the state abbreviation
-    const circlesAbbv = chartGroup.selectAll("text")
+    const circlesAbbv = chartGroup.selectAll("abbrv")
     .data(avgageData)
     .enter().append("text")
     .attr("stroke","black")
