@@ -14,4 +14,4 @@ Started code was provided that included the index.html, d3Style.css, style.css, 
 Becuase the homework came with many files (and technologies) already included, the challenge was to complete the app.js file.  (e.g. technologies were already included.)
 
 ## Steps for completion:
-"reate a scatter from two of the data variables with each circle representing a state.  Include state abbreviations in the circles and make sure the axis are labeled, situated on the bottom and left, and look reasonable.
+Create a scatter from two of the data variables with each circle representing a state.  Include state abbreviations in the circles and make sure the axis are labeled, situated on the bottom and left, and look reasonable.
